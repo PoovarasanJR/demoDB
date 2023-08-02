@@ -2,26 +2,38 @@ package demoDB.demoDB.service;
 
 import java.util.List;
 
+import javax.persistence.EntityManagerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import demoDB.demoDB.bean.primary_details;
-import demoDB.demoDB.bean.secondary_details;
-import demoDB.demoDB.repository.PrimaryRepository;
-import demoDB.demoDB.repository.SecondaryRepository;
+import demoDB.demoDB.bean1.primary_details;
+import demoDB.demoDB.bean1.secondary_details;
+import demoDB.demoDB.bean2.student;
+import demoDB.demoDB.repository1.PrimaryRepository;
+import demoDB.demoDB.repository1.SecondaryRepository;
+import demoDB.demoDB.repository2.StudentRepository;
 
 
 @Service
 public class service2 {
 	
-	private final RestTemplate restTemplate;
-	@Autowired
-	public service2(RestTemplate restTemplate) {
-		this.restTemplate=restTemplate;
-	}
+
+    private final RestTemplate restTemplate;
+    private final PrimaryRepository primaryRepository;
+    private final SecondaryRepository secondaryRepository;
+    private final StudentRepository studentRepository;
+
+    @Autowired
+    public service2(RestTemplate restTemplate, PrimaryRepository primaryRepository,
+                    SecondaryRepository secondaryRepository, StudentRepository studentRepository) {
+        this.restTemplate = restTemplate;
+        this.primaryRepository = primaryRepository;
+        this.secondaryRepository = secondaryRepository;
+        this.studentRepository = studentRepository;
+    }
 	public String callAnotherService(){
 		  String otherServiceUrl = "http://localhost:9090/control1/users"; // Replace with the actual URL of the other service
 
@@ -34,17 +46,16 @@ public class service2 {
 	        return responseBody;
 	}
 	
-	@Autowired
-	private PrimaryRepository primaryRepository;
 	public List<primary_details> getPrimaryResponse(){
 		 List<primary_details> list=primaryRepository.findAll();
 		 return list;
 	}
-	@Autowired
-	private SecondaryRepository secondaryRepository;
 	public List<secondary_details> getSecondaryResponse(){
 		 List<secondary_details> list=secondaryRepository.findAll();
 		 return list;
 	}
-	
+	public List<student> getStudentResponse(){
+		 List<student> list=studentRepository.findAll();
+		 return list;
+	}
 }

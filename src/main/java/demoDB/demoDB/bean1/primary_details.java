@@ -1,4 +1,4 @@
-package demoDB.demoDB.bean;
+package demoDB.demoDB.bean1;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
