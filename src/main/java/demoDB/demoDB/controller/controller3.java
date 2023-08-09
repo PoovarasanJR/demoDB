@@ -1,11 +1,16 @@
 package demoDB.demoDB.controller;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import demoDB.demoDB.bean1.primary_details;
 import demoDB.demoDB.bean1.secondary_details;
@@ -38,5 +43,15 @@ public class controller3 {
 	@GetMapping("/studentdb")
 	public List<student> retrieveStudentResponse(){
 		return service2.getStudentResponse();
+	}
+	@PostMapping("/insertStudent")
+	public ResponseEntity<Object> createUser(@RequestBody student student) {
+
+		student student1 = service2.insertStudent(student);
+
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{name}").buildAndExpand(student1.getName())
+				.toUri();
+
+		return ResponseEntity.created(location).build();
 	}
 }

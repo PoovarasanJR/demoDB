@@ -2,8 +2,6 @@ package demoDB.demoDB.service;
 
 import java.util.List;
 
-import javax.persistence.EntityManagerFactory;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -57,5 +55,9 @@ public class service2 {
 	public List<student> getStudentResponse(){
 		 List<student> list=studentRepository.findAll();
 		 return list;
+	}
+	public student insertStudent(student student) {
+		studentRepository.save(student);
+		return student;
 	}
 }
